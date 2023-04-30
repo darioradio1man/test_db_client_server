@@ -21,10 +21,15 @@ class CustomDB(metaclass=MetaSingleton):
         self.record_time = None
 
     def add_records(self, **kwargs):
+        """
+        Добавление записей в БД
+        :param kwargs: значения передаются по типу "ключ-значение"
+        :return:
+        """
         self.id += 1
         self.record_time = datetime.now()
         try:
-            keys = [x for x in kwargs.keys()]
+            keys = [str(x) for x in kwargs.keys()]
             if keys == self.columns:
                 for key, value in kwargs.items():
                     CustomDB.records_db.append({'id': self.id, key: value, 'timestamp': self.record_time})
@@ -84,6 +89,13 @@ class CustomDB(metaclass=MetaSingleton):
 
     @staticmethod
     def sliding_window(cursor: float = 0.0, direction: str = None, pagination: int = 100):
+        """
+        Функция, позволяющая отсматривать
+        :param cursor: от 0 до 1. Где 0 - начало БД,
+        :param direction:
+        :param pagination: Количество записей, которые мы можем отсмотреть
+        :return:
+        """
         if pagination >= len(CustomDB.records_db):
             if direction == 'down':
                 cursor += (1 / len(CustomDB.records_db)) + 1

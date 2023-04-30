@@ -1,7 +1,8 @@
+import ast
 import socket
 from datetime import datetime
 import db
-# import ast
+
 
 address = ('localhost', 26709)
 max_size = 1000
@@ -23,8 +24,9 @@ while True:
         value = None
         if mydata.lower() == "exit":
             break
-        # elif mydata.lower().split()[0] == 'add':
-        #     value = db.add_records()
+        # elif mydata[0] == '{':
+        #     mydata = ast.literal_eval(mydata)
+        #     value = db.add_records(**mydata)
         elif mydata.lower().split()[0] == 'delete':
             value = db.delete_records(int(mydata.lower().split()[1]))
         elif mydata.lower().split()[0] == 'changes':
