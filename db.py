@@ -40,6 +40,12 @@ class CustomDB(metaclass=MetaSingleton):
             print("Mismatch keys")
 
     def update_records(self, target_id: int, **kwargs):
+        """
+
+        :param target_id: id в котором нужно обновить запись
+        :param kwargs: ключ-значение
+        :return:
+        """
         try:
             keys = [x for x in kwargs.keys()]
             if target_id < self.id:
@@ -83,6 +89,11 @@ class CustomDB(metaclass=MetaSingleton):
 
     @staticmethod
     def show_last_changes(num_for_show: int):
+        """
+        Функция, позволяющая отсмотреть последние num_for_show записей
+        :param num_for_show: сколько записей мы можем просмотреть
+        :return: срез списка с последними записями
+        """
         if len(CustomDB.logs) != 0:
             return CustomDB.logs[-num_for_show:-1]
         return []
@@ -90,9 +101,9 @@ class CustomDB(metaclass=MetaSingleton):
     @staticmethod
     def sliding_window(cursor: float = 0.0, direction: str = None, pagination: int = 100):
         """
-        Функция, позволяющая отсматривать
-        :param cursor: от 0 до 1. Где 0 - начало БД,
-        :param direction:
+        Функция, позволяющая отсматривать часть записей БД с указанной позицией курсора
+        :param cursor: от 0 до 1. Где 0 - начало БД, а 1 - конец БД
+        :param direction: 'down' - прокрутка вниз, 'up' - прокрутка вверх
         :param pagination: Количество записей, которые мы можем отсмотреть
         :return:
         """
